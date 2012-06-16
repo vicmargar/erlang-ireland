@@ -1,22 +1,22 @@
 -module(links).
--export([padre/0, hijo/0]).
+-export([parent/0, son/0]).
 
-padre() ->
+parent() ->
     process_flag(trap_exit, true),
-    PidHijo = spawn_link(links, hijo, []),
-    io:format("Padre: ~p, Hijo: ~p~n", [self(), PidHijo]),
-    recibir_mensajes().
+    PidSon = spawn_link(links, son, []),
+    io:format("Parent: ~p, Son: ~p~n", [self(), PidSon]),
+    receive_messages().
 
-recibir_mensajes() ->
+receive_messages() ->
     receive
         Msg ->
-            io:format("Mensaje Padre: ~p~n", [Msg]),
-            recibir_mensajes()
+            io:format("Message Parent: ~p~n", [Msg]),
+            receive_messages()
     end.
 
-hijo() ->
+son() ->
     receive
         Msg ->
-            io:format("Mensaje Hijo: ~p~n", [Msg]),
-            hijo()
+            io:format("Message Son: ~p~n", [Msg]),
+            son()
     end.
