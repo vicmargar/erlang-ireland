@@ -1,18 +1,18 @@
--module(contador).
+-module(counter).
 
--export([contar/0]).
+-export([count/0]).
 
-contar() ->
-    contar(0).
+count() ->
+    count(0).
 
-contar(Valor) ->
+count(Value) ->
     receive
-        cuenta ->
-            contar(Valor + 1);
-        valor ->
-            io:format("El valor es: ~p~n", [Valor]),
-            contar(Valor);
+        count ->
+            count(Value + 1);
+        value ->
+            io:format("The value is: ~p~n", [Value]),
+            count(Value);
         Msg ->
-            io:format("Mensaje desconocido: ~p~n", [Msg]),
-            contar(Valor)
+            io:format("Unknown message: ~p~n", [Msg]),
+            count(Value)
     end.
